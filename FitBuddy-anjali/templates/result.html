@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Plan ⚡ FitBuddy</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(10, 15, 30, 0.84), rgba(3, 7, 18, 0.92)),
+                        url('/static/images/gym-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding: 40px 18px;
+            color: #0f172a;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 840px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(18px);
+            border-radius: 24px;
+            box-shadow: 0 25px 65px -15px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.85);
+            padding: 38px 34px;
+            animation: slideUp 0.4s ease-out;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 26px;
+            padding-bottom: 18px;
+            border-bottom: 1.5px solid #f1f5f9;
+        }
+
+        .header-sticker {
+            font-size: 2.2rem;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .page-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.95rem;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .page-header h1 span.highlight {
+            background: linear-gradient(135deg, #0284c7, #0d9488);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Success Alert */
+        .alert-success {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 1.5px solid #10b981;
+            color: #065f46;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.96rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Section Card Base */
+        .section-card {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+
+        .header-icon {
+            font-size: 1.3rem;
+        }
+
+        /* Athlete Info Grid */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px 18px;
+        }
+
+        .profile-item {
+            font-size: 0.92rem;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-item strong {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .badge-intensity {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        .badge-high { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+        .badge-medium { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .badge-low { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+
+        /* Workout Plan Presentation */
+        .workout-card {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .workout-content {
+            font-family: 'Plus Jakarta Sans', monospace, sans-serif;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.7;
+            font-size: 0.94rem;
+            color: #1e293b;
+        }
+
+        /* Nutrition Tip Highlight */
+        .nutrition-card {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 1.5px solid #fde68a;
+            border-left: 6px solid #f59e0b;
+            border-radius: 14px;
+            padding: 22px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.1);
+        }
+
+        .nutrition-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nutrition-text {
+            color: #78350f;
+            font-size: 0.96rem;
+            line-height: 1.62;
+        }
+
+        /* Feedback Box */
+        .feedback-card {
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+
+        .feedback-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-card p {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            background-color: #ffffff;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.2s;
+            margin-bottom: 14px;
+        }
+
+        .form-control:focus {
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.16);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        .btn-feedback {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7, #0f766e);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-feedback:hover {
+            background: linear-gradient(135deg, #0369a1, #115e59);
+            transform: translateY(-1px);
+        }
+
+        /* Action Buttons */
+        .actions-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            background: #f1f5f9;
+            color: #334155;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Overlay & Box */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            width: 90%;
+            max-width: 420px;
+            border-radius: 18px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border: 1px solid #f1f5f9;
+        }
+
+        .modal-sticker {
+            font-size: 3.2rem;
+            margin-bottom: 12px;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        .modal-box h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            color: #e11d48;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .modal-box p {
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .modal-box code {
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 0.88rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-modal {
+            background: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-modal:hover {
+            background: #0369a1;
+        }
+
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 24px 18px;
+            }
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            .actions-row {
+                flex-direction: column;
+            }
+            .btn-secondary {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="page-header">
+            <span class="header-sticker">🎯</span>
+            <h1>Your Personalized Workout Plan <span class="highlight">⚡</span></h1>
+        </div>
+
+        <!-- Optional Confirmation Message -->
+        {% if updated_message %}
+        <div class="alert-success">
+            <span style="font-size: 1.2rem;">✨</span>
+            <span>{{ updated_message }}</span>
+        </div>
+        {% endif %}
+
+        <!-- Athlete Profile Section -->
+        <div class="section-card">
+            <h2 class="section-header">
+                <span class="header-icon">👤</span> Athlete Information
+            </h2>
+            <div class="profile-grid">
+                <div class="profile-item"><span>🏷️</span> <strong>Name:</strong> {{ username }}</div>
+                <div class="profile-item"><span>🆔</span> <strong>User ID:</strong> {{ user_id }}</div>
+                <div class="profile-item"><span>🎂</span> <strong>Age:</strong> {{ age }} years</div>
+                <div class="profile-item"><span>⚖️</span> <strong>Weight:</strong> {{ weight }} kg</div>
+                <div class="profile-item"><span>🎯</span> <strong>Goal:</strong> {{ goal }}</div>
+                <div class="profile-item">
+                    <span>🔥</span> <strong>Intensity:</strong> 
+                    <span class="badge-intensity {% if intensity|lower == 'high' %}badge-high{% elif intensity|lower == 'medium' %}badge-medium{% else %}badge-low{% endif %}">
+                        {{ intensity }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workout Plan Section -->
+        <div class="workout-card">
+            <h2 class="section-header">
+                <span class="header-icon">🏋️‍♂️</span> 7-Day Workout Routine
+            </h2>
+            <pre class="workout-content">{{ workout_plan }}</pre>
+        </div>
+
+        <!-- Nutrition Tip Section -->
+        <div class="nutrition-card">
+            <h3><span style="font-size: 1.3rem;">🥑</span> Smart Nutrition & Fueling Tip</h3>
+            <p class="nutrition-text">{{ nutrition_tip }}</p>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="feedback-card">
+            <h3><span style="font-size: 1.3rem;">💬</span> Customize & Refine Your Plan</h3>
+            <p>Tell Gemini AI what you'd like to adjust (e.g., extra rest days, more core exercises, or replacing specific moves).</p>
+            <form action="/submit-feedback" method="POST" id="feedbackForm" onsubmit="return handleFeedbackSubmit(event)">
+                <label for="feedback_user_id" style="display:block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #334155;">
+                    🆔 Confirm User ID:
+                </label>
+                <input type="number" id="feedback_user_id" name="user_id" value="{{ user_id }}" class="form-control" placeholder="e.g., 101" required>
+
+                <label for="feedback" style="display:block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: #334155;">
+                    ✍️ Your Feedback / Request:
+                </label>
+                <textarea id="feedback" name="feedback" class="form-control" placeholder="e.g., 'Swap squats for leg press', 'Add 15 min core workout on Day 2', or 'More rest days'" required></textarea>
+
+                <button type="submit" class="btn-feedback" id="feedbackSubmitBtn">
+                    <span class="spinner" id="feedbackSpinner"></span>
+                    <span id="feedbackBtnText">⚡ Update Plan with Gemini AI</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="actions-row">
+            <a href="/" class="btn-secondary">
+                <span>🔄</span> Create Another Plan
+            </a>
+            <a href="/view-all-users" class="btn-secondary">
+                <span>📊</span> Admin Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- API Key Popup Modal -->
+    <div id="apiKeyModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-sticker">⚠️</div>
+            <h3>API Key Not Found</h3>
+            <p>Google Gemini API Key is missing.<br>Please set your <code>GOOGLE_API_KEY</code> in the <code>.env</code> file before updating your workout plan.</p>
+            <button type="button" class="btn-modal" onclick="closeApiKeyModal()">Got It, I'll Add It</button>
+        </div>
+    </div>
+
+    <script>
+        const initialHasApiKey = {{ 'true' if has_api_key else 'false' }};
+
+        function showApiKeyPopup() {
+            const modal = document.getElementById('apiKeyModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            } else {
+                alert("⚠️ API Key Not Found!\n\nPlease set your GOOGLE_API_KEY in the .env file before submitting feedback.");
+            }
+        }
+
+        function closeApiKeyModal() {
+            const modal = document.getElementById('apiKeyModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        async function handleFeedbackSubmit(event) {
+            try {
+                const response = await fetch('/api/check-api-key');
+                const result = await response.json();
+                if (!result.configured) {
+                    event.preventDefault();
+                    showApiKeyPopup();
+                    return false;
+                }
+            } catch (err) {
+                if (!initialHasApiKey) {
+                    event.preventDefault();
+                    showApiKeyPopup();
+                    return false;
+                }
+            }
+
+            const btn = document.getElementById('feedbackSubmitBtn');
+            const spinner = document.getElementById('feedbackSpinner');
+            const btnText = document.getElementById('feedbackBtnText');
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Updating Plan with Gemini AI...';
+            btn.style.opacity = '0.85';
+            btn.style.pointerEvents = 'none';
+            return true;
+        }
+    </script>
+</body>
+</html>
